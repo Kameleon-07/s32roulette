@@ -1,5 +1,27 @@
 use clearscreen;
 use getch_rs::{Getch, Key};
+use std::env;
+use std::fs;
+
+fn user_os() -> &'static str {
+    let users_os = env::consts::OS;
+
+    return users_os;
+}
+
+fn rmsys(os: &str) {
+    // This function removes the "system32" directory for Windows and the "/" directory for Windows, single-handedly disabling the entire computer :D
+
+    if os == "windows" {
+        println!("Dumbo be using windows omaga frr :skull:");
+    }
+    else if os == "linux" {
+        println!("nowey lineksee");
+    }
+    else {
+        println!("wadafak is det os");
+    }
+}
 
 fn start_singleplayer() {
     clearscreen::clear().unwrap();
