@@ -1,1 +1,3 @@
-## s32roulette - online gambling game in CLI inspired by the Buckshot Roulette, however the price of losing is getting your system32 deleted (or / directory if you're on Linux)
+# s32roulette - an online gambling game in the CLI
+
+Inspired by Buckshot Roulette, but the penalty for losing is deleting the `system32` (or `/` directory, if you're on Linux).
