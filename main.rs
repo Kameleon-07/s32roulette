@@ -53,19 +53,19 @@ fn menu() -> usize {
         println!("===========================");
         println!("  Welcome to S32 Roulette!");
         println!("===========================");
-        println!("Use 'W' and 'S' to navigate");
+        println!("Use 'W' and 'S' or Arrows to navigate");
         println!("Use 'E' to select");
         for option in options {
             println!("{}", option);
         }
 
         match g.getch() {
-            Ok(Key::Char('w')) => {
+            Ok(Key::Char('w')) | Ok(Key::Up) => {
                 if counter != 0 {
                     counter -= 1;
                 }
             },
-            Ok(Key::Char('s')) => {
+            Ok(Key::Char('s')) | Ok(Key::Down) => {
                 if counter != 2 {
                     counter += 1;
                 }
