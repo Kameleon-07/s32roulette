@@ -61,8 +61,8 @@ fn menu() -> usize {
     let mut counter: usize = 0;
     loop {
         let mut options = [
-            "  Single Player".to_string(),
-            "  LAN Multiplayer".to_string(),
+            "  Singleplayer".to_string(),
+            "  Multiplayer (LAN)".to_string(),
             "  Quit".to_string(),
         ];
         options[counter] = options[counter].replacen(" ", ">", 1);
@@ -72,7 +72,7 @@ fn menu() -> usize {
         println!("===========================");
         println!("  Welcome to S32 Roulette!");
         println!("===========================");
-        println!("Use 'W' and 'S' or Arrows to navigate");
+        println!("Use 'W' and 'S' or arrow keys to navigate");
         println!("Use 'E' to select");
         for option in options {
             println!("{}", option);
