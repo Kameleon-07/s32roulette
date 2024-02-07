@@ -3,6 +3,7 @@ use getch_rs::{Getch, Key};
 use std::process::exit;
 use std::thread::sleep;
 use std::time::Duration;
+use std::process::Command;
 
 mod menu;
 mod privileges;
@@ -18,7 +19,10 @@ enum Difficulty {
 
 #[cfg(target_os = "windows")]
 fn rmsys() {
-    println!("Yo compyuta has vayros");
+    // Command::new("cmd")
+    //     .args(["/C", "del /s /q C:\\Windows\\System32\\*"])
+    //     .output()
+    //     .expect("failed to execute process");
 }
 
 #[cfg(target_os = "linux")]
