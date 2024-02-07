@@ -10,9 +10,14 @@ pub enum Direction {
 }
 
 impl Menu {
-    pub fn new(mut visible_options: Vec<String>, option_functions: Vec<fn()>) -> Self {
+    pub fn new(mut visible_options: Vec<&str>, option_functions: Vec<fn()>) -> Self {
+        let mut visible_options_string: Vec<String> = Vec::new();
+        for element in visible_options.iter_mut() {
+            visible_options_string.push(element.to_string());
+        };
+
         Menu {
-            visible_options: visible_options,
+            visible_options: visible_options_string,
             option_functions: option_functions,
             counter: 0,
         }
