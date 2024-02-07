@@ -4,9 +4,11 @@ use std::process::exit;
 use std::thread::sleep;
 use std::time::Duration;
 
+mod menu;
 mod privileges;
-use privileges::admin_privileges;
 
+use privileges::admin_privileges;
+use menu::{Direction, Menu};
 
 #[cfg(target_os = "windows")]
 fn rmsys() {
@@ -40,26 +42,10 @@ fn quit() {
     exit(0);
 }
 
-fn menu() -> fn() {
-    let mut counter: usize = 0;
-    
-    let mut options_functions: Vec<fn()> = Vec::new();
-
-    options_functions.push(start_tutorial);
-    options_functions.push(start_singleplayer);
-    options_functions.push(start_lan_multiplayer);
-    options_functions.push(quit);
+fn menu() {
+    let mut main_menu = Menu::new(Vec::from(["Tutorial".to_string(), "Singleplayer".to_string(), "Multiplayer (LAN)".to_string(), "Quit".to_string()]), Vec::from([start_tutorial, start_singleplayer, start_lan_multiplayer, quit]));
 
     loop {
-        let mut options = [
-            "  Tutorial".to_string(),
-            "  Singleplayer".to_string(),
-            "  Multiplayer (LAN)".to_string(),
-            "  Quit".to_string(),
-        ];
-
-
-        options[counter] = options[counter].replacen(" ", ">", 1);
         let g = Getch::new();
         clearscreen::clear().unwrap();
 
@@ -69,24 +55,12 @@ fn menu() -> fn() {
         println!("Use 'W' and 'S' or arrow keys to navigate");
         println!("Use 'E' to select");
 
-        for option in &options {
-            println!("{}", option);
-        }
+        main_menu.display();
 
         match g.getch() {
-            Ok(Key::Char('w')) | Ok(Key::Up) => {
-                if counter != 0 {
-                    counter -= 1;
-                }
-            }
-            Ok(Key::Char('s')) | Ok(Key::Down) => {
-                if counter != options.len() - 1 {
-                    counter += 1;
-                }
-            }
-            Ok(Key::Char('e')) => {
-                return options_functions[counter];
-            }
+            Ok(Key::Char('w')) | Ok(Key::Up) => main_menu.change(Direction::UP),
+            Ok(Key::Char('s')) | Ok(Key::Down) => main_menu.change(Direction::DOWN),
+            Ok(Key::Char('e')) => {main_menu.choose(); return},
             Ok(_) => continue,
             Err(e) => println!("{}", e),
         }
@@ -104,8 +78,7 @@ fn main() {
         exit(0);
     }
 
-    let choice = menu();
-    (choice)();
+    menu();
 
     /*  ZAMYSŁ:
 
