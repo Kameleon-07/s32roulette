@@ -11,7 +11,7 @@ pub mod admin_privileges {
     }
 
     #[cfg(target_os = "windows")]
-    pub fn check_privileges() -> i32 {
+    pub fn is_launched_as_admin() -> bool {
         unsafe {
             let mut token_handle: windows::HANDLE = std::ptr::null_mut();
             let process_handle = windows::GetCurrentProcess();
@@ -35,17 +35,23 @@ pub mod admin_privileges {
                 }
             }
 
-            is_admin
+            if(is_admin < 1) {
+                false
+            } else {
+                true
+            }
         }
     }
 
     #[cfg(target_os = "linux")]
-    pub fn check_privileges() {
+    pub fn is_launched_as_admin() -> bool {
         // Something should be here :DDDD
+        false
     }
 
     #[cfg(not(any(target_os = "windows", target_os = "linux")))]
-    pub fn check_privileges() {
+    pub fn is_launched_as_admin()  -> bool {
         println!("Ayo wtf is that system stfu bro");
+        false
     }
 }

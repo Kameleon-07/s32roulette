@@ -82,9 +82,9 @@ fn menu() -> usize {
 }
 
 fn main() {
-    let is_admin = admin_privileges::check_privileges();
+    let is_admin = admin_privileges::is_launched_as_admin();
 
-    if is_admin == 0 {
+    if !is_admin {
         println!("You need administrator priviliges for this game to work properly");
         println!("Press any key to close...");
 
