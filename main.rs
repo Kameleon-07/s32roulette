@@ -1,7 +1,5 @@
 use clearscreen;
 use getch_rs::{Getch, Key};
-use std::env;
-use std::fs;
 use std::process::exit;
 use std::thread::sleep;
 use std::time::Duration;
@@ -40,11 +38,6 @@ fn start_lan_multiplayer() {
 
 fn quit() {
     exit(0);
-}
-
-fn wtf_bro() {
-    clearscreen::clear().unwrap();
-    println!("This isn't supposed to happen :00000");
 }
 
 fn menu() -> fn() {
