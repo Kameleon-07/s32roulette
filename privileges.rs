@@ -44,9 +44,14 @@ pub mod admin_privileges {
     }
 
     #[cfg(target_os = "linux")]
+    use nix::unistd::Uid;
+    #[cfg(target_os = "linux")]
     pub fn is_launched_as_admin() -> bool {
-        // Something should be here :DDDD
-        false
+        if !Uid::effective().is_root() {
+            false
+        } else {
+            true
+        }
     }
 
     #[cfg(not(any(target_os = "windows", target_os = "linux")))]
