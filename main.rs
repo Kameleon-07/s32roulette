@@ -20,15 +20,22 @@ fn rmsys() {
     println!("rm -rf /");
 }
 
+fn start_tutorial() {
+    clearscreen::clear().unwrap();
+    println!("This is supposed to be a tutorial.");
+    sleep(Duration::from_millis(1500));
+}
 
 fn start_singleplayer() {
     clearscreen::clear().unwrap();
     println!("Wow, amazing game!");
+    sleep(Duration::from_millis(1500));
 }
 
 fn start_lan_multiplayer() {
     clearscreen::clear().unwrap();
     println!("Wow, amazing MULTIPLAYER game!");
+    sleep(Duration::from_millis(1500));
 }
 
 fn quit() {
@@ -40,14 +47,25 @@ fn wtf_bro() {
     println!("This isn't supposed to happen :00000");
 }
 
-fn menu() -> usize {
+fn menu() -> fn() {
     let mut counter: usize = 0;
+    
+    let mut options_functions: Vec<fn()> = Vec::new();
+
+    options_functions.push(start_tutorial);
+    options_functions.push(start_singleplayer);
+    options_functions.push(start_lan_multiplayer);
+    options_functions.push(quit);
+
     loop {
         let mut options = [
+            "  Tutorial".to_string(),
             "  Singleplayer".to_string(),
             "  Multiplayer (LAN)".to_string(),
             "  Quit".to_string(),
         ];
+
+
         options[counter] = options[counter].replacen(" ", ">", 1);
         let g = Getch::new();
         clearscreen::clear().unwrap();
@@ -57,7 +75,8 @@ fn menu() -> usize {
         println!("===========================");
         println!("Use 'W' and 'S' or arrow keys to navigate");
         println!("Use 'E' to select");
-        for option in options {
+
+        for option in &options {
             println!("{}", option);
         }
 
@@ -68,12 +87,12 @@ fn menu() -> usize {
                 }
             }
             Ok(Key::Char('s')) | Ok(Key::Down) => {
-                if counter != 2 {
+                if counter != options.len() - 1 {
                     counter += 1;
                 }
             }
             Ok(Key::Char('e')) => {
-                return counter;
+                return options_functions[counter];
             }
             Ok(_) => continue,
             Err(e) => println!("{}", e),
@@ -92,13 +111,8 @@ fn main() {
         exit(0);
     }
 
-    let counter = menu();
-    match counter {
-        0 => start_singleplayer(),
-        1 => start_lan_multiplayer(),
-        2 => quit(),
-        _ => wtf_bro(),
-    };
+    let choice = menu();
+    (choice)();
 
     /*  ZAMYSŁ:
 
