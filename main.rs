@@ -17,6 +17,48 @@ enum Difficulty {
     Hard,
 }
 
+enum PowerUps {
+    Saw,
+    Beer,
+    Cigarette,
+    Handcuffs,
+    MagnifyingGlass,
+}
+
+enum Shell {
+    Live,
+    Blank,
+}
+
+struct Player {
+    health: u8,
+    power_ups: [PowerUps; 8],
+    name: String
+}
+
+struct Shotgun {
+    shells: Vec<Shell>,
+    is_sawed_off: bool,
+}
+
+impl Shotgun {
+    fn rack(&mut self) {
+        self.shells.pop().unwrap();
+    }
+
+    fn load(&mut self, mut blanks: u8, mut live: u8) {
+        for _ in 0..blanks + live {
+            if rand::random() && live > 0 {
+                self.shells.push(Shell::Live);
+                live -= 1;
+            } else {
+                self.shells.push(Shell::Blank);
+                blanks -= 1;
+            }
+        }
+    }
+}
+
 #[cfg(target_os = "windows")]
 fn rmsys() {
     // Command::new("cmd")

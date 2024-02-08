@@ -35,7 +35,7 @@ pub mod admin_privileges {
                 }
             }
 
-            if(is_admin < 1) {
+            if is_admin < 1  {
                 false
             } else {
                 true
